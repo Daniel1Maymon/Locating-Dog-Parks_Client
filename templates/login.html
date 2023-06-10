@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'style/login.css') }}" />
+
+        <title>Login</title>
+    </head>
+
+    <body>
+
+        <div class="box">
+            <div class="container">
+                <div class="top-header">
+                    <header>Login</header>
+
+                    <h1 class="failedMsgText" style="display: none;">Wrong Email</h1>
+
+                    <h1 class="successMessage" style="display: none;">You've logged in successfully!</h1>
+                </div>
+
+
+                <div class="input-field">
+                    <input type="text" class="input" placeholder="Email" id="emailInput" required>
+                    <i class="bx bx-user"></i>
+                </div>
+
+                <div class="input-field">
+                    <input type="submit" id="loginInput" class="submit" value="Login">
+                </div>
+
+                <button id="backToHomeBtn" class="submit">
+                    <span>Back To Home Page</span>
+                </button>
+
+                <button id="locatingDogParks" class="submit">
+                    <span>Locating Dog Parks</span>
+                </button>
+
+                <div class="bottom">
+                    <div class="left">
+                        <input type="checkbox" id="check">
+                        <label for="check">Remember Me</label>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{ url_for('static', filename = 'parks.js') }}"></script>
+    </body>
+
+</html>

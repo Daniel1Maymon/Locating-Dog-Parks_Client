@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Locating Dog Parks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'style/parks.css') }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+
+
+
+
+  </head>
+
+  <body>
+    <!--   
+    <h1>Locating Dog Parks</h1>
+    <button id="findParks" onclick="getParks()">Locate Dog Parks</button>  
+       -->
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="headline-header">
+            <h1>לאיתור גינות כלבים הכנס את המיקום שלך</h1>
+          </div>
+
+          <!-- Autocomplete location search input -->
+          <div class="form-group">
+            <label>Location:</label>
+            <input type="text" class="form-control" id="search_input" placeholder="Type address..." />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="map"></div>
+    <div id="park-list"></div>
+
+    <div class="table-wrapper">
+      <table class="table table-striped">
+        <tr class="bg-info">
+          <th data-column="onMyWay">On My Way There</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th data-column="rating" data-order="desc">Rating &#9650</th>
+          <th data-column="distance" data-order="desc">Distnace(KM) &#9650</th>
+        </tr>
+
+        <tbody id="myTable">
+
+        </tbody>
+      </table>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename = 'parks.js') }}"></script>
+  </body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename = 'style/login.css') }}" />
+
+        <title>Register</title>
+    </head>
+
+    <body>
+
+        <div id="successMessage" style="display: none;">
+            <h1 class="succMsgText">Registration succeeded</h1>
+        </div>
+        <div class="box">
+            <div class="container">
+                <div class="top-header">
+                    <header>Register</header>
+
+                    <h1 class="failedMsgText" style="display: none;">One or more of the fields are incorrect</h1>
+
+                    <h1 class="successMessage" style="display: none;">You've logged in successfully!</h1>
+                </div>
+
+                <div class="input-field">
+                    <input type="text" class="input" placeholder="Email" id="emailInput" required>
+                    <i class="bx bx-user"></i>
+                </div>
+
+                <div class="input-field">
+                    <input type="text" class="input" placeholder="Role" id="roleInput" required>
+                    <i class="bx bx-user"></i>
+                </div>
+
+                <div class="input-field">
+                    <input type="text" class="input" placeholder="Username" id="usernameInput" required>
+                    <i class="bx bx-user"></i>
+                </div>
+
+                <div class="input-field">
+                    <input type="text" class="input" placeholder="Avater" id="avatarInput" required>
+                    <i class="bx bx-user"></i>
+                </div>
+
+                <div class="input-field">
+                    <input type="submit" id="registerBtn" class="submit" value="Register">
+                </div>
+
+                <button id="backToHomeBtn" class="submit">
+                    <span>Back To Home Page</span>
+                </button>
+
+                <button id="locatingDogParks" class="submit">
+                    <span>Locating Dog Parks</span>
+                </button>
+
+                <!-- <button id="locatingDogParks" class="submit">
+                    <span>Locating Dog Parks</span>
+                </button> -->
+
+                <!-- <div class="bottom">
+                    <div class="left">
+                        <input type="checkbox" id="check">
+                        <label for="check">Remember Me</label>
+                    </div>
+                </div> -->
+                <!-- <div class="input-field">
+                <input type="text" class="input" placeholder="Username" required>
+            </div> -->
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{{ url_for('static', filename = 'parks.js') }}"></script>
+    </body>
+
+</html>

@@ -1,0 +1,158 @@
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: url("../images/park.jpg");
+    ;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+}
+
+
+.container {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px 0 15px;
+}
+
+span {
+    color: #fff;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+}
+
+header {
+    color: #fff;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+}
+
+#failedMessage {
+    display: inline;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.input {
+    height: 45px;
+    width: 87%;
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    color: black;
+    padding: 0 0 0 45px;
+    /* background: rgba(255, 255, 255, 0.1); */
+}
+
+i {
+    position: relative;
+    top: -33px;
+    left: 17px;
+    color: black
+}
+
+::-webkit-input-placeholder {
+    color: black;
+}
+
+.submit, #locatingDogParks {
+    border: none;
+    border-radius: 30px;
+    font-size: 15px;
+    height: 45px;
+    outline: none;
+    width: 100px;
+    background: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.submit:hover {
+    box-shadow: 1px 5px 7px rgba(0, 0, 0, 0.2);
+}
+
+.bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: small;
+    color: #fff;
+    margin-top: 10px;
+}
+
+.left {
+    display: flex;
+}
+
+label a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.successMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: forestgreen;
+    font-weight: bold;
+    -webkit-text-stroke: 1px white;
+    -moz-text-stroke: 1px white;
+    -ms-text-stroke: 1px white;
+    succMsgText-stroke: 1px white;
+}
+
+.failedMsgText {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0 10px 0;
+    color: crimson;
+    font-weight: bold;
+    -webkit-text-stroke: 1px white;
+    -moz-text-stroke: 1px white;
+    -ms-text-stroke: 1px white;
+    succMsgText-stroke: 1px white;
+}
+
+#backToHomeDiv {}
+
+#backToHomeBtn,  #locatingDogParks {
+    padding: 5px;
+    width: auto;
+    white-space: nowrap;
+    display: none;
+    margin-top: 10px;
+}
+
+#backToHomeBtn span, #locatingDogParks span{
+    margin: 0 5px;
+    color: black;
+    font-size: 15px;
+}
+
+/* #locatingDogParks {
+    margin: 0 5px;
+    color: black;
+    font-size: 15px;
+    display: none;
+} */
