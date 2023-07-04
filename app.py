@@ -15,21 +15,62 @@ CORS(app)
 gen = f"{os.urandom(16)}"
 app.secret_key = b"123456"
 
-
+ 
 @app.route("/parks")
 def parks():
-    user_boundary = session.get("user_boundary")
-    session["user_boundary"] = session.get("user_boundary")
-    print(f"parks::  user_boundary={user_boundary}")
-    return render_template("parks.html")
+
+    variable = session.get('variable')
+    print(f':: parks ENDPOINT:: variable={variable}')
+    return render_template("parks.html", variable=variable)
 
 
 @app.route("/login")
 def login():
-    # user_boundary = session.get('user_boundary')
-    # print(f"login::  user_boundary={user_boundary}")
-    return render_template("login.html")
+    variable_value = 'example'
+    session['variable'] = variable_value
+    
+    variable = session.get('variable')
+    print(f':: login:: variable={variable}')
+    
+    return render_template("login.html", variable=variable_value)
 
+@app.route("/update_variable", methods=["POST"])
+def update_variable():
+    print(":: inside update_variable :: ")
+    request_body = json.loads(request.get_data(as_text=True))
+    
+    new_variable_value = request_body['userBoundary']
+    session['variable'] = new_variable_value
+    print(f":: update_variable ENDPOINT:: {session.get('variable')}")
+    return jsonify({'msg':'Variable updated successfully'})
+
+
+@app.route('/update_user_role', methods=["POST"])
+def update_user_role():
+    request_body = json.loads(request.get_data(as_text=True))
+    user_boundary = json.loads(request_body['userBoundary'].replace("'", "\""))
+    
+    role = request_body['role']
+    userEmail = user_boundary['userId']['email']
+    
+    url = 'http://localhost:8084/superapp/users/2023b.ben.el.shervi/' + userEmail  + '3'
+    
+    body_to_send ={
+        "role": role
+    }
+    
+    json_paylod = json.dumps(body_to_send)
+    
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+    }
+    
+    response = requests.put(url=url, headers=headers, data=json_paylod)
+    print(f":: /update_user_role :: response = {response}")
+    return response.text
+    
 
 # Serve as proxy to prevent CORS error
 @app.route("/send_login_request", methods=["GET", "POST"])
@@ -98,13 +139,32 @@ def get_user_boundary():
 
 @app.route("/")
 def index():
+    variable = session.get('variable')
+    
+    if variable:
+        print(f':: index:: variable={variable}')
+    else:
+        # Variable not found in the session
+        print('Variable not available')
+    
     return render_template("home_page.html")
 
-# @app.route("/send_get_parks_request", methods=["GET", "POST"])
-# def send_get_parks_request():
-#     request_body = json.loads(request.get_data(as_text=True))
-#     json_paylod = json.dumps(request_body)
+@app.route("/send_get_parks_request", methods=["GET", "POST"])
+def send_get_parks_request():
+    request_body = json.loads(request.get_data(as_text=True))
+    json_paylod = json.dumps(request_body)
+
+    url = 'http://localhost:8084/superapp/miniapp/locatingDogParks'
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+    }
+
+    response = requests.post(url=url, headers=headers,data=json_paylod)
+    return response.json()
+    
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=6002)
-    # app.run(host="127.0.0.1", port=6002, debug=True)
+    

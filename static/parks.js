@@ -20,6 +20,13 @@ var headersBody = {
 
 if (window.location.pathname.endsWith('parks')) {
     console.log("::: inside /parks")
+
+    // Get the script element
+    var scriptElement = document.currentScript;
+    // Get the value from the data-variable attribute
+    var variableValue = scriptElement.getAttribute('data-variable');
+    console.log('variableValue = ', variableValue)
+
     var searchInput = document.getElementById('search_input');
 
     console.log('userBoudary = ', userBoudary)
@@ -42,9 +49,70 @@ if (window.location.pathname.endsWith('parks')) {
                 selectedPlace = place;
 
                 saveSelectedPlace();
-                getParks()
+
+                getParksFromServer(variableValue)
+
             });
         });
+    }
+
+    function getParksFromServer(data) {
+        updateUserRole(data, "SUPERAPP_USER")
+        .then(() => {
+            console.log(":: getParksFromServer:: after updateUserRole")
+
+            // var objData = setNewParkSearchObject(variableValue)
+
+            getParks(objData)
+
+            updateUserRole(data, "MINIAPP_USER")
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    }
+
+    function setNewParkSearchObject(data) {
+
+        
+        // updateUserRole(data, "MINIAPP_USER")
+        var objData = createNewParkObejct(data)
+        return objData
+
+    }
+
+    async function updateUserRole(data, role) {
+        try {
+            console.log(data)
+            const url = '/update_user_role';
+            bodyToSend = {
+                'userBoundary': data,
+                'role': role
+            }
+            const reponse = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(bodyToSend)
+            })
+                .then(reponse => {
+                    if ('error' in response) {
+                        console.log("error in data")
+
+                        throw new Error(data.error);
+                    }
+
+                    console.log(":: setNewParkSearchObject:: reponse= ", reponse)
+                    return data;
+                })
+                .catch(error => {
+                    throw new Error("Update user role request failed");
+                });
+        } catch (error) {
+            console.error("Error:", error);
+        }
+        
     }
 
 
@@ -78,13 +146,13 @@ if (window.location.pathname.endsWith('parks')) {
                 "targetObject": {
                     "objectId": {
                         "superapp": "2023b.ben.el.shervi",
-                        "internalObjectId": "4414f1dd-7deb-4da0-a612-b2af7c728e75"
+                        "internalObjectId": "eefe8b34-0b33-46a4-9b09-206f9e15a415"
                     }
                 },
                 "invokedBy": {
                     "userId": {
                         "superapp": "2023b.ben.el.shervi",
-                        "email": "daniel20@gmail.com"
+                        "email": "daniel2@gmail.com"
                     }
                 },
                 "commandAttributes": {
@@ -94,7 +162,7 @@ if (window.location.pathname.endsWith('parks')) {
                 }
             };
 
-            const url = 'http://localhost:8084/superapp/miniapp/locatingDogParks'
+            const url = '/send_get_parks_request'
             fetch(url, {
                 method: 'POST',
                 headers: {
@@ -594,6 +662,8 @@ if (window.location.pathname.endsWith('login')) {
     // });
 
 
+
+
     // Add event listener to the 'Register' input
     loginInputField = document.getElementById('loginInput')
     backToHomeButton = document.getElementById("backToHomeBtn")
@@ -610,6 +680,7 @@ if (window.location.pathname.endsWith('login')) {
         getFormInput()
 
         userBoudary = loginUser(emailInput.value)
+        // saveUserBoundaryInSession(userBoudary)
     });
 
     function getFormInput() {
@@ -641,15 +712,16 @@ if (window.location.pathname.endsWith('login')) {
                 .then(data => {
                     console.log("data (response.json()) = ", data)
                     // console.log("data.json() = ", data.json())
-                    if ('error' in data){
+                    if ('error' in data) {
                         console.log("error in data")
-                        
+
                         throw new Error(data.error);
                     }
                     else {
                         console.log("error NOT in data")
                         displaySuccMsg();
                         backToHomeButton.style.display = 'block';
+                        saveUserBoundaryInSession(data)
                         resolve();
                     }
 
@@ -698,7 +770,7 @@ if (typeof currentHTMLFile !== 'undefined') {
 function displayErrorMsg() {
     failedMsgText.style.display = 'flex';
     succMsg.style.display = 'none';
-    
+
     if (typeof locatingDogParksDiv !== 'undefined' && locatingDogParksDiv !== null) {
         locatingDogParksDiv.style.display = 'none'
     }
@@ -720,8 +792,25 @@ function displaySuccMsg() {
     if (typeof document.getElementById('registerBtn') !== 'undefined' && document.getElementById('registerBtn') !== null) {
         document.getElementById('registerBtn').style.display = 'none'
     }
-    
-
 
 }
 
+function saveUserBoundaryInSession(data) {
+    console.log(':: saveUserBoundaryInSession:: data= ', data)
+
+    fetch('/update_variable', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "userBoundary": data })
+    })
+        .then(data => { return data.json() })
+        .then(dataResponse => {
+            console.log("data response from /update_variable: ")
+            console.log(dataResponse)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+}
