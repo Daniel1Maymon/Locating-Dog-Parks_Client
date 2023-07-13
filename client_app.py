@@ -98,7 +98,7 @@ def send_login_request():
 def send_register_request():
     request_body = json.loads(request.get_data(as_text=True))
     json_paylod = json.dumps(request_body)
-    url = "http://localhost:8084/superapp/users"
+    url = "http://localhost:8080/users/"
     headers = {
         "Content-Type": "application/json",
         "Accept": "*/*",
@@ -106,7 +106,7 @@ def send_register_request():
     }
 
     response = requests.post(url=url, headers=headers,data=json_paylod)
-    return response.json()
+    return jsonify(response.json())
 
 
 @app.route("/register")
